@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "com.walls.energetic_plus.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+      "loadWorld"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

@@ -12,7 +12,7 @@ import static com.walls.energetic_plus.EnergeticPlus.MOD_ID;
 
 public class ModItems {
 
-    public static final Item ENERGETIC_PLUS = register("energetic_plus", Item::new, new Item.Settings().maxCount(1));
+    public static final Item ENERGETIC_PLUS = register("energetic_plus", EnergeticItem::new, new Item.Settings().maxCount(1).maxDamage(5));
 
     // 注册单个物品的方法
     public static Item register(String path, Function<Item.Settings, Item> factory, Item.Settings settings) {

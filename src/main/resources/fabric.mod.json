@@ -2,14 +2,14 @@
 	"schemaVersion": 1,
 	"id": "energetic-plus",
 	"version": "${version}",
-	"name": "Energetic Plus",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "能量+（Energetic Plus）",
+	"description": "让MC的战斗体验更好",
 	"authors": [
-		"Me!"
+		"Walls"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/Walls7695/More_Energetic/",
+		"sources": "https://github.com/Walls7695/More_Energetic/"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/energetic-plus/icon.png",

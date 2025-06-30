@@ -1,22 +1,24 @@
 package com.walls.energetic_plus.item;
 
 import com.walls.energetic_plus.effect.ModEffects;
+import com.walls.energetic_plus.modTag.ModItemTags;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-import static com.walls.energetic_plus.EnergeticPlus.MOD_ID;
 
 public class EnergeticItem extends Item {
     public EnergeticItem(Settings settings) {
@@ -42,8 +44,9 @@ public class EnergeticItem extends Item {
         if (heldItemStack.getItem() == ModItems.ENERGETIC_PLUS) {
             if (!isItemOnCooldown(user, heldItemStack)) {
                 int Amplifier = Optional.ofNullable(user.getStatusEffect(ModEffects.ENERGY))
-                        .map(StatusEffectInstance::getAmplifier)  // 直接获取 amplifier，不加 1
+                        .map(StatusEffectInstance::getAmplifier)
                         .orElse(-1);
+
                 if(!(Amplifier >= 10)){
                     if (isItemMaxDamaged(heldItemStack)) {
                         resetItemAndRemove(heldItemStack, user, hand);
@@ -66,8 +69,6 @@ public class EnergeticItem extends Item {
                     user.addStatusEffect(energyEffect);
                     user.sendMessage(Text.translatable("energyItem.tips.already_added"), true);
                 }
-            } else {
-                user.sendMessage(Text.of("ssss"), false);
             }
         }
         //待定

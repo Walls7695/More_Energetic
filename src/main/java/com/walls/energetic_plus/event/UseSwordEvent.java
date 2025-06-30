@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
@@ -19,7 +20,7 @@ public class UseSwordEvent {
     public static void register(){
         ServerLivingEntityEvents.AFTER_DAMAGE.register((LivingEntity, DamageSource, Stack, Float, Boolean) -> {
             if (DamageSource.getAttacker() instanceof PlayerEntity) {
-                if (DamageSource.getWeaponStack().isIn(ModItemTags.SWORD)) {
+                if (((PlayerEntity) DamageSource.getAttacker()).getMainHandStack().isIn(ItemTags.SWORDS)) {
                     int Amplifier = Optional.ofNullable(DamageSource.getAttacker()) // 先检查攻击者是否存在
                             .filter(entity -> entity instanceof PlayerEntity) // 过滤玩家
                             .map(entity -> (PlayerEntity) entity) // 转换为 PlayerEntity

@@ -11,8 +11,8 @@ import net.minecraft.util.Identifier;
 
 public class ModItemGroup {
     // 定义并注册自定义物品组
-    public static final ItemGroup MAO_GROUP = Registry.register(Registries.ITEM_GROUP,
-            Identifier.of(EnergeticPlus.MOD_ID, "mao_group"), // 注册物品组ID
+    public static final ItemGroup ENERGETIC_PLUS_GROUP = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(EnergeticPlus.MOD_ID, "energetic_plus_group"), // 注册物品组ID
             FabricItemGroup.builder()
                     .displayName(Text.translatable("itemGroup.energetic_plus_group"))  // 设置物品组名称
                     .icon(() -> new ItemStack(ModItems.ENERGETIC_PLUS)) // 设置物品组图标

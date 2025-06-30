@@ -1,5 +1,6 @@
 package com.walls.energetic_plus;
 
+import com.walls.energetic_plus.effect.ModEffects;
 import com.walls.energetic_plus.item.ModItemGroup;
 import com.walls.energetic_plus.item.ModItems;
 import net.fabricmc.api.ModInitializer;
@@ -24,6 +25,7 @@ public class EnergeticPlus implements ModInitializer {
 
 		ModItems.registerModItems();
 		ModItemGroup.registerModItemsGroup();
+		ModEffects.registerEffects();
 
 		LOGGER.info("All Done");
 	}

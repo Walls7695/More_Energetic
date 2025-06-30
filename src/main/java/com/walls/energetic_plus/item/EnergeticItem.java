@@ -44,7 +44,7 @@ public class EnergeticItem extends Item {
                 }
 
             }else{
-                LOGGER.info("lengquezhong~~~");
+                LOGGER.info("lengquezhong~");
             }
         }
     }

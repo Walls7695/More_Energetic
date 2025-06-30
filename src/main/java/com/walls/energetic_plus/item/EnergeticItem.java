@@ -57,15 +57,14 @@ public class EnergeticItem extends Item {
                         StatusEffectInstance energyEffect = new StatusEffectInstance(ModEffects.ENERGY, user.getStatusEffect(ModEffects.ENERGY).getDuration()+20*20, Amplifier+1);
                         user.removeStatusEffect(ModEffects.ENERGY);
                         user.addStatusEffect(energyEffect);
-                        user.sendMessage(Text.translatable("等级+1"), true);
+                        user.sendMessage(Text.translatable("energyItem.tips.level_up"), true);
                     }else {
-                        user.sendMessage(Text.translatable("已达上限"), true);
+                        user.sendMessage(Text.translatable("energyItem.tips.have_the_maximum"), true);
                     }
-
                 }else {
                     StatusEffectInstance energyEffect = new StatusEffectInstance(ModEffects.ENERGY, 20*10, 0);
                     user.addStatusEffect(energyEffect);
-                    user.sendMessage(Text.translatable("已应用"), true);
+                    user.sendMessage(Text.translatable("energyItem.tips.already_added"), true);
                 }
             } else {
                 user.sendMessage(Text.of("ssss"), false);

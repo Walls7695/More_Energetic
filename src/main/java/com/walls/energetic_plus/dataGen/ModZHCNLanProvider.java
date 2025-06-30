@@ -23,6 +23,10 @@ public class ModZHCNLanProvider extends FabricLanguageProvider {
         translationBuilder.add("effect."+MOD_ID+".wet","潮湿");
         translationBuilder.add("effect."+MOD_ID+".energy","能量");
 
+        translationBuilder.add("energyItem.tips.level_up", "能量升级");
+        translationBuilder.add("energyItem.tips.have_the_maximum", "已达上限");
+        translationBuilder.add("energyItem.tips.already_added", "已充能");
+
         translationBuilder.add("itemGroup.energetic_plus_group", "能量+");
     }
 }

@@ -1,6 +1,9 @@
 {
   "effect.energetic-plus.energy": "能量",
   "effect.energetic-plus.wet": "潮湿",
+  "energyItem.tips.already_added": "已充能",
+  "energyItem.tips.have_the_maximum": "已达上限",
+  "energyItem.tips.level_up": "能量升级",
   "item.energetic-plus.energetic_plus": "能量+",
   "itemGroup.energetic_plus_group": "能量+"
 }

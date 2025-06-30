@@ -1,5 +1,9 @@
 {
-  "effect.energetic-plus.wet": "Energy",
+  "effect.energetic-plus.energy": "Energy",
+  "effect.energetic-plus.wet": "Wet",
+  "energyItem.tips.already_added": "Already Added!",
+  "energyItem.tips.have_the_maximum": "Have The Maximum！",
+  "energyItem.tips.level_up": "Level Up！",
   "item.energetic-plus.energetic_plus": "Energetic+",
   "itemGroup.energetic_plus_group": "Energetic+"
 }

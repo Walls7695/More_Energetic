@@ -1,7 +1,11 @@
 package com.walls.energetic_plus.item;
 
+import net.minecraft.block.Portal;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -31,12 +35,14 @@ public class EnergeticItem extends Item {
     private void DealWithItemObject(World world, PlayerEntity user, Hand hand) {
         if(user.getStackInHand(hand).getItem() == ModItems.ENERGETIC_PLUS){
             if(!user.getItemCooldownManager().isCoolingDown(user.getStackInHand(hand))){
-                if (!(user.getStackInHand(hand).getDamage() ==1)){
-                    user.getStackInHand(hand).setDamage(user.getStackInHand(hand).getMaxDamage()-1);
-                }else{
+                if(user.getStackInHand(hand).getDamage() + 1 >= user.getStackInHand(hand).getMaxDamage()){
                     user.getStackInHand(hand).setDamage(0);
+                    user.setStackInHand(hand, ItemStack.EMPTY);
+                }else{
+                    user.getStackInHand(hand).damage(1, user);
+                    user.getItemCooldownManager().set(user.getStackInHand(hand), 20*1);
                 }
-                user.getItemCooldownManager().set(user.getStackInHand(hand), 20*10);
+
             }else{
                 LOGGER.info("lengquezhong~~~");
             }

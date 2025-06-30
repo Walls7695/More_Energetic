@@ -10,7 +10,7 @@
 	"contact": {
 		"sources": "https://github.com/Walls7695/More_Energetic/"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/energetic-plus/icon.png",
 	"environment": "*",
 	"entrypoints": {

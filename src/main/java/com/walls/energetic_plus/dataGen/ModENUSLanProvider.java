@@ -20,7 +20,7 @@ public class ModENUSLanProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(ModItems.ENERGETIC_PLUS,"Energetic+");
-        translationBuilder.add("effect."+MOD_ID+".wet","Wet");
+        translationBuilder.add("effect."+MOD_ID+".wet","Energy");
 
         translationBuilder.add("itemGroup.energetic_plus_group", "Energetic+");
     }

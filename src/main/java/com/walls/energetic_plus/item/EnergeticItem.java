@@ -23,8 +23,10 @@ public class EnergeticItem extends Item {
         super(settings);
     }
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    private static final int COOLDOWN_DURATION = 20 * 1;
+    //test
+    //public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+    private static final int COOLDOWN_DURATION = 20 * 5;
 
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
@@ -39,8 +41,8 @@ public class EnergeticItem extends Item {
         //ENERGETIC_PLUS
         if (heldItemStack.getItem() == ModItems.ENERGETIC_PLUS) {
             if (!isItemOnCooldown(user, heldItemStack)) {
-                int Amplifier = Optional.ofNullable(user.getStatusEffect(ModEffects.WET))
-                        .map(effect -> effect.getAmplifier() + 1)
+                int Amplifier = Optional.ofNullable(user.getStatusEffect(ModEffects.ENERGY))
+                        .map(StatusEffectInstance::getAmplifier)  // 直接获取 amplifier，不加 1
                         .orElse(-1);
                 if(!(Amplifier >= 10)){
                     if (isItemMaxDamaged(heldItemStack)) {
@@ -50,19 +52,19 @@ public class EnergeticItem extends Item {
                     }
                 }
                 world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                if(user.hasStatusEffect(ModEffects.WET)){
+                if(user.hasStatusEffect(ModEffects.ENERGY)){
                     if(!(Amplifier >10)){
-                        StatusEffectInstance wetEffect = new StatusEffectInstance(ModEffects.WET, 20 * 10 * Amplifier, Amplifier+1);
-                        user.removeStatusEffect(ModEffects.WET);
-                        user.addStatusEffect(wetEffect);
+                        StatusEffectInstance energyEffect = new StatusEffectInstance(ModEffects.ENERGY, user.getStatusEffect(ModEffects.ENERGY).getDuration()+20*20, Amplifier+1);
+                        user.removeStatusEffect(ModEffects.ENERGY);
+                        user.addStatusEffect(energyEffect);
                         user.sendMessage(Text.translatable("等级+1"), true);
                     }else {
                         user.sendMessage(Text.translatable("已达上限"), true);
                     }
 
                 }else {
-                    StatusEffectInstance wetEffect = new StatusEffectInstance(ModEffects.WET, 20*10, 0);
-                    user.addStatusEffect(wetEffect);
+                    StatusEffectInstance energyEffect = new StatusEffectInstance(ModEffects.ENERGY, 20*10, 0);
+                    user.addStatusEffect(energyEffect);
                     user.sendMessage(Text.translatable("已应用"), true);
                 }
             } else {
@@ -73,10 +75,6 @@ public class EnergeticItem extends Item {
 
         //and more~~
     }
-
-//    private boolean isValidItem(ItemStack itemStack) {
-//        return itemStack.getItem() == ModItems.ENERGETIC_PLUS;
-//    }
 
     private boolean isItemOnCooldown(PlayerEntity player, ItemStack itemStack) {
         return player.getItemCooldownManager().isCoolingDown(itemStack);
@@ -93,6 +91,6 @@ public class EnergeticItem extends Item {
 
     private void damageItemAndSetCooldown(ItemStack itemStack, PlayerEntity player) {
         itemStack.damage(1, player);
-        player.getItemCooldownManager().set(itemStack, 20*5);
+        player.getItemCooldownManager().set(itemStack, COOLDOWN_DURATION);
     }
 }

@@ -21,6 +21,7 @@ public class ModZHCNLanProvider extends FabricLanguageProvider {
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(ModItems.ENERGETIC_PLUS,"能量+");
         translationBuilder.add("effect."+MOD_ID+".wet","潮湿");
+        translationBuilder.add("effect."+MOD_ID+".energy","能量");
 
         translationBuilder.add("itemGroup.energetic_plus_group", "能量+");
     }

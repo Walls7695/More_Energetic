@@ -18,6 +18,7 @@ public class ModItemGroup {
                     .icon(() -> new ItemStack(ModItems.ENERGETIC_PLUS)) // 设置物品组图标
                     .entries((displayContext, entries) -> { // 添加物品到物品组中
                         entries.add(ModItems.ENERGETIC_PLUS);
+                        entries.add(ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE);
                     }).build());
 
     // 注册物品组的方法

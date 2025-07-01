@@ -1,11 +1,8 @@
 package com.walls.energetic_plus.dataGen;
 
-import com.walls.energetic_plus.effect.ModEffects;
 import com.walls.energetic_plus.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -20,6 +17,8 @@ public class ModENUSLanProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(ModItems.ENERGETIC_PLUS,"Energetic+");
+        translationBuilder.add(ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE,"Energy converter(blood power repayment type)");
+
         translationBuilder.add("effect."+MOD_ID+".wet","Wet");
         translationBuilder.add("effect."+MOD_ID+".energy","Energy");
 

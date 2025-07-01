@@ -21,5 +21,6 @@ public class ModModelsProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ModItems.ENERGETIC_PLUS, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE, Models.GENERATED);
     }
 }

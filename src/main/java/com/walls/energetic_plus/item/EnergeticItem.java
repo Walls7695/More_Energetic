@@ -1,6 +1,7 @@
 package com.walls.energetic_plus.item;
 
 import com.walls.energetic_plus.effect.ModEffects;
+import com.walls.energetic_plus.modTag.ModItemTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -91,32 +92,42 @@ public class EnergeticItem extends Item {
         }
         //ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE
         if (offHandItemStack.getItem() == ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE) {
-            //判断物品是否在冷却中
             if (!isItemOnCooldown(user, heldItemStack)) {
-                user.removeCommandTag("added blood power attacker");
-                //设置冷却
-                damageItemAndSetCooldown(heldItemStack, user, 20, false);
-                BlockPos playerPos = user.getBlockPos();
-                Box searchBox = new Box(playerPos).expand(10); // 搜索半径为10个方块
-                List<Entity> Entities = world.getOtherEntities(
-                        user,                      // 排除的实体（使用者自身）
-                        searchBox,                 // 搜索区域
-                        entity -> entity.isAlive()             // 不过滤其他实体（保留所有）
-                );
-                if (Entities != null) {
-                    Entity nearestEntity = Entities.getFirst();
-                    if (nearestEntity instanceof LivingEntity) {
-                        LivingEntity nearestLivingEntity = (LivingEntity) nearestEntity;
-                        Vec3d forwardOffset = nearestLivingEntity.getRotationVector().multiply(-1.5);
-                        Vec3d targetPos = new Vec3d(
-                                nearestLivingEntity.getX() + forwardOffset.getX(),
-                                nearestLivingEntity.getY(), // 保持Y坐标一致
-                                nearestLivingEntity.getZ() + forwardOffset.getZ()
-                        );
-                        user.teleport(targetPos.getX(), targetPos.getY(), targetPos.getZ(), false);
-                        StatusEffectInstance bloodPowerRepaymentEffect = new StatusEffectInstance(ModEffects.BLOOD_POWER_REPAYMENT, 20*6, 1);
-                        nearestLivingEntity.addStatusEffect(bloodPowerRepaymentEffect);
+                if(user.hasStatusEffect(ModEffects.ENERGY)||user.getMainHandStack().isIn(ModItemTags.SWORD)){
+                    if(user.getStatusEffect(ModEffects.ENERGY).getAmplifier() == 0){
+                        user.removeStatusEffect(ModEffects.ENERGY);
+                    }else{
+                        StatusEffectInstance energyEffect = new StatusEffectInstance(ModEffects.ENERGY, user.getStatusEffect(ModEffects.ENERGY).getDuration(), user.getStatusEffect(ModEffects.ENERGY).getAmplifier()-1);
+                        user.removeStatusEffect(ModEffects.ENERGY);
+                        user.addStatusEffect(energyEffect);
                     }
+                    user.removeCommandTag("added blood power attacker");
+                    //设置冷却
+                    damageItemAndSetCooldown(heldItemStack, user, 20*40, false);
+                    BlockPos playerPos = user.getBlockPos();
+                    Box searchBox = new Box(playerPos).expand(10); // 搜索半径为10个方块
+                    List<Entity> Entities = world.getOtherEntities(
+                            user,                      // 排除的实体（使用者自身）
+                            searchBox,                 // 搜索区域
+                            entity -> entity.isAlive()             // 不过滤其他实体（保留所有）
+                    );
+                    if (Entities != null) {
+                        Entity nearestEntity = Entities.getFirst();
+                        if (nearestEntity instanceof LivingEntity) {
+                            LivingEntity nearestLivingEntity = (LivingEntity) nearestEntity;
+                            Vec3d forwardOffset = nearestLivingEntity.getRotationVector().multiply(-1.5);
+                            Vec3d targetPos = new Vec3d(
+                                    nearestLivingEntity.getX() + forwardOffset.getX(),
+                                    nearestLivingEntity.getY(), // 保持Y坐标一致
+                                    nearestLivingEntity.getZ() + forwardOffset.getZ()
+                            );
+                            user.teleport(targetPos.getX(), targetPos.getY(), targetPos.getZ(), false);
+                            StatusEffectInstance bloodPowerRepaymentEffect = new StatusEffectInstance(ModEffects.BLOOD_POWER_REPAYMENT, 20*6, 1);
+                            nearestLivingEntity.addStatusEffect(bloodPowerRepaymentEffect);
+                        }
+                    }
+                }else{
+                    user.sendMessage(Text.translatable("energyItem.tips.no_energy_or_main_hand_item_is_not_sword"), true);
                 }
             }
         }else if (heldItemStack.getItem() == ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE) {

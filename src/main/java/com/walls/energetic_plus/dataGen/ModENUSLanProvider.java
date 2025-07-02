@@ -27,6 +27,7 @@ public class ModENUSLanProvider extends FabricLanguageProvider {
         translationBuilder.add("energyItem.tips.level_up", "Level Up！");
         translationBuilder.add("energyItem.tips.have_the_maximum", "Have The Maximum！");
         translationBuilder.add("energyItem.tips.already_added", "Already Added!");
+        translationBuilder.add("energyItem.tips.no_energy_or_main_hand_item_is_not_sword", "No Energy Or Main Hand Item Is Not Sword");
 
         translationBuilder.add("itemGroup.energetic_plus_group", "Energetic+");
     }

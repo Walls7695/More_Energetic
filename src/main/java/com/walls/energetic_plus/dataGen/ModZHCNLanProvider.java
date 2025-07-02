@@ -27,6 +27,7 @@ public class ModZHCNLanProvider extends FabricLanguageProvider {
         translationBuilder.add("energyItem.tips.level_up", "能量升级");
         translationBuilder.add("energyItem.tips.have_the_maximum", "已达上限");
         translationBuilder.add("energyItem.tips.already_added", "已充能");
+        translationBuilder.add("energyItem.tips.no_energy_or_main_hand_item_is_not_sword", "没有能量或主手物品不是剑");
 
         translationBuilder.add("itemGroup.energetic_plus_group", "能量+");
     }

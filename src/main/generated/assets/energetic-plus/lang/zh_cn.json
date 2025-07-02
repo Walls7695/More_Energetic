@@ -6,6 +6,7 @@
   "energyItem.tips.already_added": "已充能",
   "energyItem.tips.have_the_maximum": "已达上限",
   "energyItem.tips.level_up": "能量升级",
+  "energyItem.tips.no_energy_or_main_hand_item_is_not_sword": "没有能量或主手物品不是剑",
   "item.energetic-plus.energetic_plus": "能量+",
   "item.energetic-plus.energy_converter_blood_power_repayment_type": "能量转换器(血能偿还型)",
   "itemGroup.energetic_plus_group": "能量+"

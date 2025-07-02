@@ -21,18 +21,23 @@ public class DamageEvent {
                 if (DamageSource.getAttacker() instanceof PlayerEntity) {
                     // 检查玩家是否手持剑
                     if (((PlayerEntity) DamageSource.getAttacker()).getMainHandStack().isIn(ItemTags.SWORDS)) {
-                        if(((PlayerEntity) DamageSource.getAttacker()).getOffHandStack().getItem()== ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE){
-                            // 检查玩家是否拥有能量效果
-                            if(((PlayerEntity) DamageSource.getAttacker()).getStatusEffect(ModEffects.ENERGY) != null){
-                                if(LivingEntity.isAlive()){
-                                    // 获取攻击者的能量效果的放大器值
-                                    int Amplifier = Optional.ofNullable(DamageSource.getAttacker()) // 先检查攻击者是否存在
-                                            .filter(entity -> entity instanceof PlayerEntity) // 过滤玩家
-                                            .map(entity -> (PlayerEntity) entity) // 转换为 PlayerEntity
-                                            .map(player -> player.getStatusEffect(ModEffects.ENERGY)) // 获取效果
-                                            .map(effect -> effect.getAmplifier() + 2) // 存在效果时返回 amplifier + 2
-                                            .orElse(1); // 攻击者为空
-
+                        if(((PlayerEntity) DamageSource.getAttacker()).getOffHandStack().getItem() == ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE){
+                            if(LivingEntity.isAlive()){
+                                // 获取攻击者的能量效果的放大器值
+                                int Amplifier = Optional.ofNullable(DamageSource.getAttacker()) // 先检查攻击者是否存在
+                                        .filter(entity -> entity instanceof PlayerEntity) // 过滤玩家
+                                        .map(entity -> (PlayerEntity) entity) // 转换为 PlayerEntity
+                                        .map(player -> player.getStatusEffect(ModEffects.BLOOD_POWER_ATTACKER)) // 获取效果
+                                        .map(effect -> effect.getAmplifier() + 2) // 存在效果时返回 amplifier + 2
+                                        .orElse(1); // 攻击者为空
+                                LivingEntity.setOnFireForTicks(20 * Amplifier);
+                                LivingEntity.damage((ServerWorld) LivingEntity.getWorld(), DamageSource, Stack + Amplifier);
+                                if(((PlayerEntity)DamageSource.getAttacker()).getStatusEffect(ModEffects.BLOOD_POWER_ATTACKER).getAmplifier() == 0){
+                                    ((PlayerEntity)DamageSource.getAttacker()).removeStatusEffect(ModEffects.BLOOD_POWER_ATTACKER);
+                                }else{
+                                    StatusEffectInstance energyEffect = new StatusEffectInstance(ModEffects.BLOOD_POWER_ATTACKER, ((PlayerEntity)DamageSource.getAttacker()).getStatusEffect(ModEffects.BLOOD_POWER_ATTACKER).getDuration(), ((PlayerEntity)DamageSource.getAttacker()).getStatusEffect(ModEffects.BLOOD_POWER_ATTACKER).getAmplifier()-1);
+                                    ((PlayerEntity)DamageSource.getAttacker()).removeStatusEffect(ModEffects.BLOOD_POWER_ATTACKER);
+                                    ((PlayerEntity)DamageSource.getAttacker()).addStatusEffect(energyEffect);
                                 }
                             }
                         }

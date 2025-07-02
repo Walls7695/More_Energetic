@@ -24,10 +24,14 @@ public class BloodPowerRepayment extends StatusEffect {
             entity.addStatusEffect(newEffect);
         }
         if(entity.isDead()){
-            if(entity.getAttacker() instanceof PlayerEntity||entity.getAttacker().hasStatusEffect(ModEffects.BLOOD_POWER_ATTACKER)){
-                entity.getAttacker().addStatusEffect(new StatusEffectInstance(ModEffects.BLOOD_POWER_ATTACKER, 20 * 10 + entity.getAttacker().getStatusEffect(ModEffects.BLOOD_POWER_ATTACKER).getDuration(), entity.getStatusEffect(ModEffects.BLOOD_POWER_REPAYMENT).getAmplifier() * 5 + entity.getAttacker().getStatusEffect(ModEffects.BLOOD_POWER_ATTACKER).getAmplifier()));
-            } else if (entity.getAttacker() instanceof PlayerEntity) {
-                entity.getAttacker().addStatusEffect(new StatusEffectInstance(ModEffects.BLOOD_POWER_ATTACKER, 20 * 10, entity.getStatusEffect(ModEffects.BLOOD_POWER_REPAYMENT).getAmplifier() * 5));
+            PlayerEntity attacker = entity.getAttackingPlayer();
+            StatusEffectInstance effect = entity.getStatusEffect(ModEffects.BLOOD_POWER_REPAYMENT);
+            if(attacker instanceof PlayerEntity){
+                if(attacker.hasStatusEffect(ModEffects.BLOOD_POWER_ATTACKER)){
+                    attacker.addStatusEffect(new StatusEffectInstance(ModEffects.BLOOD_POWER_ATTACKER, 20 * 10 + attacker.getStatusEffect(ModEffects.BLOOD_POWER_ATTACKER).getDuration(), effect.getAmplifier() * 5 + attacker.getStatusEffect(ModEffects.BLOOD_POWER_ATTACKER).getAmplifier()));
+                } else {
+                    attacker.addStatusEffect(new StatusEffectInstance(ModEffects.BLOOD_POWER_ATTACKER, 20 * 10, effect.getAmplifier() * 5));
+                }
             }
         }
         return super.applyUpdateEffect(world, entity, amplifier);

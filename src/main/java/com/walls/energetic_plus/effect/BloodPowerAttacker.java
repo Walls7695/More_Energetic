@@ -1,4 +1,4 @@
-package com.walls.energetic_plus.event;
+package com.walls.energetic_plus.effect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;

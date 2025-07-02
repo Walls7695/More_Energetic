@@ -1,8 +1,6 @@
 package com.walls.energetic_plus.effect;
 
-import com.walls.energetic_plus.event.BloodPowerAttacker;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;

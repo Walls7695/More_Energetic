@@ -1,22 +1,23 @@
 package com.walls.energetic_plus.item;
 
 import com.walls.energetic_plus.effect.ModEffects;
-import com.walls.energetic_plus.modTag.ModItemTags;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,8 +28,6 @@ public class EnergeticItem extends Item {
 
     //test
     //public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-    private static final int COOLDOWN_DURATION = 20 * 5;
 
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
@@ -41,6 +40,7 @@ public class EnergeticItem extends Item {
     private void handleItemUsage(World world, PlayerEntity user, Hand hand) {
         //获取玩家手持物品
         ItemStack heldItemStack = user.getStackInHand(hand);
+        ItemStack offHandItemStack = user.getOffHandStack();
         //ENERGETIC_PLUS
         if (heldItemStack.getItem() == ModItems.ENERGETIC_PLUS) {
             //判断物品是否在冷却中
@@ -58,7 +58,7 @@ public class EnergeticItem extends Item {
                         resetItemAndRemove(heldItemStack, user, hand);
                     } else {
                         //损坏物品并设置冷却
-                        damageItemAndSetCooldown(heldItemStack, user);
+                        damageItemAndSetCooldown(heldItemStack, user, 20, true);
                     }
                 }
                 //播放升级音效
@@ -89,8 +89,42 @@ public class EnergeticItem extends Item {
                 }
             }
         }
-        //待定
+        //ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE
+        if (offHandItemStack.getItem() == ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE) {
+            //判断物品是否在冷却中
+            if (!isItemOnCooldown(user, heldItemStack)) {
+                //设置冷却
+                damageItemAndSetCooldown(heldItemStack, user, 20, false);
+                BlockPos playerPos = user.getBlockPos();
+                Box searchBox = new Box(playerPos).expand(10); // 搜索半径为10个方块
+                List<Entity> Entities = world.getOtherEntities(
+                        user,                      // 排除的实体（使用者自身）
+                        searchBox,                 // 搜索区域
+                        entity -> entity.isAlive()             // 不过滤其他实体（保留所有）
+                );
+                if (Entities != null) {
+                    Entity nearestEntity = Entities.getFirst();
+                    if (nearestEntity instanceof LivingEntity) {
+                        LivingEntity nearestLivingEntity = (LivingEntity) nearestEntity;
+                        Vec3d forwardOffset = nearestLivingEntity.getRotationVector().multiply(-1.5);
+                        Vec3d targetPos = new Vec3d(
+                                nearestLivingEntity.getX() + forwardOffset.getX(),
+                                nearestLivingEntity.getY(), // 保持Y坐标一致
+                                nearestLivingEntity.getZ() + forwardOffset.getZ()
+                        );
+                        user.teleport(targetPos.getX(), targetPos.getY(), targetPos.getZ(), false);
+                        StatusEffectInstance bloodPowerRepaymentEffect = new StatusEffectInstance(ModEffects.BLOOD_POWER_REPAYMENT, 6, 1);
+                        nearestLivingEntity.addStatusEffect(bloodPowerRepaymentEffect);
+                    }
+                }
+            }
+        }else if (heldItemStack.getItem() == ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE) {
+            if (!isItemOnCooldown(user, heldItemStack)) {
+                //设置冷却
+                damageItemAndSetCooldown(heldItemStack, user, 20*40, false);
 
+            }
+        }
         //and more~~
     }
 
@@ -115,10 +149,12 @@ public class EnergeticItem extends Item {
     }
 
 // 伤害物品并设置冷却时间
-    private void damageItemAndSetCooldown(ItemStack itemStack, PlayerEntity player) {
-        // 伤害物品
-        itemStack.damage(1, player);
+    private void damageItemAndSetCooldown(ItemStack itemStack, PlayerEntity player, int cooldownDuration, boolean damage) {
+        if (damage){
+            // 伤害物品
+            itemStack.damage(1, player);
+        }
         // 设置物品冷却时间
-        player.getItemCooldownManager().set(itemStack, COOLDOWN_DURATION);
+        player.getItemCooldownManager().set(itemStack, cooldownDuration);
     }
 }

@@ -12,7 +12,7 @@ import net.minecraft.text.Text;
 
 import java.util.Optional;
 
-public class UseSwordEvent {
+public class DamageEvent {
     public static void register(){
         // 注册一个事件，当实体受到伤害后触发
         ServerLivingEntityEvents.AFTER_DAMAGE.register((LivingEntity, DamageSource, Stack, Float, Boolean) -> {
@@ -24,20 +24,19 @@ public class UseSwordEvent {
                         if(((PlayerEntity) DamageSource.getAttacker()).getOffHandStack().getItem()== ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE){
                             // 检查玩家是否拥有能量效果
                             if(((PlayerEntity) DamageSource.getAttacker()).getStatusEffect(ModEffects.ENERGY) != null){
-                                //((PlayerEntity) DamageSource.getAttacker()).getOffHandStack().getDamage()
+                                if(LivingEntity.isAlive()){
+                                    // 获取攻击者的能量效果的放大器值
+                                    int Amplifier = Optional.ofNullable(DamageSource.getAttacker()) // 先检查攻击者是否存在
+                                            .filter(entity -> entity instanceof PlayerEntity) // 过滤玩家
+                                            .map(entity -> (PlayerEntity) entity) // 转换为 PlayerEntity
+                                            .map(player -> player.getStatusEffect(ModEffects.ENERGY)) // 获取效果
+                                            .map(effect -> effect.getAmplifier() + 2) // 存在效果时返回 amplifier + 2
+                                            .orElse(1); // 攻击者为空
 
-                                //......
-
-                                // 获取攻击者的能量效果的放大器值
-                                int Amplifier = Optional.ofNullable(DamageSource.getAttacker()) // 先检查攻击者是否存在
-                                        .filter(entity -> entity instanceof PlayerEntity) // 过滤玩家
-                                        .map(entity -> (PlayerEntity) entity) // 转换为 PlayerEntity
-                                        .map(player -> player.getStatusEffect(ModEffects.ENERGY)) // 获取效果
-                                        .map(effect -> effect.getAmplifier() + 2) // 存在效果时返回 amplifier + 2
-                                        .orElse(1); // 攻击者为空
-
+                                }
                             }
-                        }else{
+                        }
+                        if(((PlayerEntity) DamageSource.getAttacker()).getOffHandStack().getItem() != ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE){
                             // 检查玩家是否拥有能量效果
                             if(((PlayerEntity) DamageSource.getAttacker()).getStatusEffect(ModEffects.ENERGY) != null){
                                 // 获取攻击者的能量效果的放大器值
@@ -58,18 +57,18 @@ public class UseSwordEvent {
                                         // 给攻击者添加新的能量效果
                                         ((PlayerEntity) DamageSource.getAttacker()).addStatusEffect(energyEffect);
                                         // 伤害实体
-                                        LivingEntity.damage((ServerWorld) LivingEntity.getWorld(), DamageSource, Stack* Amplifier);
+                                        LivingEntity.damage((ServerWorld) LivingEntity.getWorld(), DamageSource, Stack + Amplifier);
                                         ((ServerWorld) LivingEntity.getWorld()).spawnParticles(ParticleTypes.ENCHANTED_HIT, LivingEntity.getX(), LivingEntity.getY(), LivingEntity.getZ(), 1, 0, 0, 0, 0);
                                         // 发送消息给攻击者
-                                        ((PlayerEntity) DamageSource.getAttacker()).sendMessage(Text.of(String.valueOf(Stack*Amplifier)), true);
+                                        ((PlayerEntity) DamageSource.getAttacker()).sendMessage(Text.of(String.valueOf(Stack + Amplifier)), true);
                                     }else {
                                         // 移除攻击者的能量效果
                                         ((PlayerEntity) DamageSource.getAttacker()).removeStatusEffect(ModEffects.ENERGY);
                                         // 伤害实体
-                                        LivingEntity.damage((ServerWorld) LivingEntity.getWorld(), DamageSource, Stack* Amplifier);
+                                        LivingEntity.damage((ServerWorld) LivingEntity.getWorld(), DamageSource, Stack + Amplifier);
                                         ((ServerWorld) LivingEntity.getWorld()).spawnParticles(ParticleTypes.ENCHANTED_HIT, LivingEntity.getX(), LivingEntity.getY(), LivingEntity.getZ(), 1, 0, 0, 0, 0);
                                         // 发送消息给攻击者
-                                        ((PlayerEntity) DamageSource.getAttacker()).sendMessage(Text.of("你耗尽了能量！"), true);
+                                        ((PlayerEntity) DamageSource.getAttacker()).sendMessage(Text.of("你耗尽了能量！并打出"+Stack + Amplifier + "的伤害"), true);
                                     }
                                 }
                             }

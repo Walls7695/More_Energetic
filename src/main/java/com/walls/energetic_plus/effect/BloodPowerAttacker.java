@@ -7,7 +7,7 @@ import net.minecraft.server.world.ServerWorld;
 
 public class BloodPowerAttacker extends StatusEffect {
     public BloodPowerAttacker() {
-        super(StatusEffectCategory.NEUTRAL, 0xff8000);
+        super(StatusEffectCategory.NEUTRAL, 0xff0000);
     }
 
     @Override

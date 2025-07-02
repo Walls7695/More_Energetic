@@ -1,4 +1,6 @@
 {
+  "effect.energetic-plus.blood_power_attacker": "血能攻击者",
+  "effect.energetic-plus.blood_power_repayment": "血能偿还",
   "effect.energetic-plus.energy": "能量",
   "effect.energetic-plus.wet": "潮湿",
   "energyItem.tips.already_added": "已充能",

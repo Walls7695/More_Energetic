@@ -93,6 +93,7 @@ public class EnergeticItem extends Item {
         if (offHandItemStack.getItem() == ModItems.ENERGY_CONVERTER_BLOOD_POWER_REPAYMENT_TYPE) {
             //判断物品是否在冷却中
             if (!isItemOnCooldown(user, heldItemStack)) {
+                user.removeCommandTag("added blood power attacker");
                 //设置冷却
                 damageItemAndSetCooldown(heldItemStack, user, 20, false);
                 BlockPos playerPos = user.getBlockPos();
@@ -113,7 +114,7 @@ public class EnergeticItem extends Item {
                                 nearestLivingEntity.getZ() + forwardOffset.getZ()
                         );
                         user.teleport(targetPos.getX(), targetPos.getY(), targetPos.getZ(), false);
-                        StatusEffectInstance bloodPowerRepaymentEffect = new StatusEffectInstance(ModEffects.BLOOD_POWER_REPAYMENT, 6, 1);
+                        StatusEffectInstance bloodPowerRepaymentEffect = new StatusEffectInstance(ModEffects.BLOOD_POWER_REPAYMENT, 20*6, 1);
                         nearestLivingEntity.addStatusEffect(bloodPowerRepaymentEffect);
                     }
                 }

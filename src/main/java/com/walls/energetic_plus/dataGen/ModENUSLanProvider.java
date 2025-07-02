@@ -21,6 +21,8 @@ public class ModENUSLanProvider extends FabricLanguageProvider {
 
         translationBuilder.add("effect."+MOD_ID+".wet","Wet");
         translationBuilder.add("effect."+MOD_ID+".energy","Energy");
+        translationBuilder.add("effect."+MOD_ID+".blood_power_repayment","Blood Power Repayment");
+        translationBuilder.add("effect."+MOD_ID+".blood_power_attacker","Blood Power Attacker");
 
         translationBuilder.add("energyItem.tips.level_up", "Level Up！");
         translationBuilder.add("energyItem.tips.have_the_maximum", "Have The Maximum！");

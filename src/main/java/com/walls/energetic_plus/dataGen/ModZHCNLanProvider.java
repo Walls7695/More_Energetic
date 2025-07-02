@@ -21,6 +21,8 @@ public class ModZHCNLanProvider extends FabricLanguageProvider {
 
         translationBuilder.add("effect."+MOD_ID+".wet","潮湿");
         translationBuilder.add("effect."+MOD_ID+".energy","能量");
+        translationBuilder.add("effect."+MOD_ID+".blood_power_repayment","血能偿还");
+        translationBuilder.add("effect."+MOD_ID+".blood_power_attacker","血能攻击者");
 
         translationBuilder.add("energyItem.tips.level_up", "能量升级");
         translationBuilder.add("energyItem.tips.have_the_maximum", "已达上限");

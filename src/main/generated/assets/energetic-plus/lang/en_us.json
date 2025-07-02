@@ -1,4 +1,6 @@
 {
+  "effect.energetic-plus.blood_power_attacker": "Blood Power Attacker",
+  "effect.energetic-plus.blood_power_repayment": "Blood Power Repayment",
   "effect.energetic-plus.energy": "Energy",
   "effect.energetic-plus.wet": "Wet",
   "energyItem.tips.already_added": "Already Added!",
